@@ -1,8 +1,8 @@
 {
-  "name": "AssistenteVirtual_Back",
+  "name": "assistente_virtual_api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Mateus Ferraz<cabs_traces_0r@icloud.com>, Letícia Souza<bota teu email aqui depois ;)>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
