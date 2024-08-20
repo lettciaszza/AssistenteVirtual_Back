@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai'
 
 @Injectable()
-export class OpenaiService {
+export class GeminiService {
     constructor(private configService: ConfigService) {}
 
     private initGemini(): GenerativeModel {

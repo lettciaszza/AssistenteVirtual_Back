@@ -6,11 +6,11 @@ import {
     Req,
 } from '@nestjs/common'
 import { Request } from 'express'
-import { OpenaiService } from './gemini.service'
+import { GeminiService } from './gemini.service'
 
 @Controller('prompt')
-export class OpenaiController {
-    constructor(private readonly openaiService: OpenaiService) {}
+export class GeminiController {
+    constructor(private readonly geminiService: GeminiService) {}
 
     @Post()
     async findAll(@Req() request: Request): Promise<string> {
@@ -18,7 +18,7 @@ export class OpenaiController {
             throw new HttpException('Forbidden action', HttpStatus.FORBIDDEN)
 
         try {
-            let completion = await this.openaiService.getCompletion(
+            let completion = await this.geminiService.getCompletion(
                 request.body.message,
             )
 
