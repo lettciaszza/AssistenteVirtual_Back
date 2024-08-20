@@ -1,46 +1,33 @@
 import { Injectable, Param } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai'
 
 @Injectable()
 export class OpenaiService {
     constructor(private configService: ConfigService) {}
-    private async getOpenaiCompletion(message: string): Promise<string> {
-        const data = {
-            model: 'gpt-4o-mini',
-            messages: [{ role: 'user', content: message }],
-            temperature: 0.7,
-        }
-        const OPENAI_API_KEY = this.configService.get<string>('OPENAI_KEY')
 
-        try {
-            const response = await fetch(
-                'https://api.openai.com/v1/chat/completions',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${OPENAI_API_KEY}`,
-                    },
-                    body: JSON.stringify(data),
-                },
-            )
+    private initGemini(): GenerativeModel {
+        const GEMINI_KEY = this.configService.get<string>('GOOGLE_GEMINI_KEY')
 
-            if (!response.ok) {
-                throw new Error(
-                    `Error: ${response.status} ${response.statusText}`,
-                )
-            }
+        if (!GEMINI_KEY) throw new Error('Gemini Key is missing')
 
-            const result = await response.json()
-            return result.choices[0].message.content
-        } catch (err) {
-            throw new Error(`Failed to get completion from OpenAI: ${err}`)
-        }
+        const genAI = new GoogleGenerativeAI(GEMINI_KEY)
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+        return model
+    }
+
+    private async getGeminiCompletion(message: string) {
+        const gemini = this.initGemini()
+        const result = await gemini.generateContent(message)
+
+        const response = result.response
+        const text = response.text()
+        return text
     }
 
     async getCompletion(message: string): Promise<string> {
         try {
-            const response = await this.getOpenaiCompletion(message)
+            const response = await this.getGeminiCompletion(message)
             return response
         } catch (err) {
             throw err
