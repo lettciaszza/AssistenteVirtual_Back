@@ -6,7 +6,7 @@ import {
     Req,
 } from '@nestjs/common'
 import { Request } from 'express'
-import { OpenaiService } from './openai.service'
+import { OpenaiService } from './gemini.service'
 
 @Controller('prompt')
 export class OpenaiController {
