@@ -15,7 +15,7 @@ describe('AppController', () => {
     })
 
     describe('root', () => {
-        it('should return "Hello World!"', () => {
+        it('Should return the health of the system', () => {
             expect(appController.getHealth()).toBeDefined()
         })
     })

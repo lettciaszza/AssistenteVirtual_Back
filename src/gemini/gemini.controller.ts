@@ -13,7 +13,7 @@ export class GeminiController {
     constructor(private readonly geminiService: GeminiService) {}
 
     @Post()
-    async findAll(@Req() request: Request): Promise<string> {
+    async getPrompt(@Req() request: Request): Promise<string> {
         if (!request.body.message)
             throw new HttpException('Forbidden action', HttpStatus.FORBIDDEN)
 

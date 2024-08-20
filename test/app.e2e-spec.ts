@@ -18,4 +18,12 @@ describe('AppController (e2e)', () => {
     it('/ (GET)', () => {
         return request(app.getHttpServer()).get('/health').expect(200)
     })
+
+    it('/prompt (POST)', () => {
+        const message = { text: 'Hello, world!' }
+        return request(app.getHttpServer())
+            .post('/prompt')
+            .send(message)
+            .expect(200)
+    })
 })
