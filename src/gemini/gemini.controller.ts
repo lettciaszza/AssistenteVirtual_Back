@@ -4,11 +4,14 @@ import {
     HttpStatus,
     Post,
     Req,
+    UseGuards,
 } from '@nestjs/common'
 import { Request } from 'express'
 import { GeminiService } from './gemini.service'
+import { ApiKeyAuthGuard } from 'src/guard/auth-key.guard'
 
 @Controller('prompt')
+@UseGuards(ApiKeyAuthGuard)
 export class GeminiController {
     constructor(private readonly geminiService: GeminiService) {}
 
@@ -24,7 +27,7 @@ export class GeminiController {
 
             return completion
         } catch (err) {
-            console.error(`openai::controller: ${err}`)
+            console.error(`gemini::controller: ${err}`)
             throw new HttpException(
                 err || 'Something went wrong',
                 HttpStatus.INTERNAL_SERVER_ERROR,
