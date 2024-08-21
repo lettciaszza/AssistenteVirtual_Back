@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { Request } from 'express'
 import { GeminiService } from './gemini.service'
-import { ApiKeyAuthGuard } from 'src/guard/auth-key.guard'
+import { ApiKeyAuthGuard } from '../guard/auth-key.guard'
 
 @Controller('prompt')
 @UseGuards(ApiKeyAuthGuard)
