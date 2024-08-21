@@ -20,10 +20,10 @@ describe('AppController (e2e)', () => {
     })
 
     it('/prompt (POST)', () => {
-        const message = { text: 'Hello, world!' }
+        const message = { message: 'Hello, world!' }
         return request(app.getHttpServer())
             .post('/prompt')
             .send(message)
-            .expect(200)
+            .expect(201)
     })
 })
