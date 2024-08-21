@@ -1,0 +1,26 @@
+name: Unit test
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # or the version your project uses
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run end-to-end tests
+        run: yarn test:e2e
+
+      - run: echo "🎉 The tests have completed. The job status is ${{ job.status }}."
