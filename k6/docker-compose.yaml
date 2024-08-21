@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+      - INFLUXDB_ADMIN_ENABLED=true
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - influxdb
+
+  k6:
+    build: .
+    container_name: k6
+    depends_on:
+      - influxdb
+    volumes:
+      - ./your_test.js:/tester.js
+
+volumes:
+  influxdb-storage:
+  grafana-storage:
